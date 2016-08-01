@@ -35,6 +35,24 @@ class MealsTableViewController: UITableViewController,
         let meal = meals[row]
         let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: nil)
         cell.textLabel?.text = meal.name
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(MealsTableViewController.showDetails(_:)))
+        cell.addGestureRecognizer(longPress)
         return cell
+    }
+    //Detalhes para Gesto de Pressionar o Item
+    func showDetails(recognizer: UILongPressGestureRecognizer){
+        if recognizer.state == UIGestureRecognizerState.Began {
+            let cell = recognizer.view as! UITableViewCell
+            let indexPath = tableView.indexPathForCell(cell)
+            if indexPath == nil{
+                return
+            }
+            let row = indexPath!.row
+            let meal = meals[row]
+            //Mostra os detalhes do objeto selecionado
+            let details = UIAlertController(title: meal.name, message: "Happiness: \(meal.happiness)", preferredStyle: UIAlertControllerStyle.Alert)
+            //Exibe na tela o modal com os details de forma animado
+            presentViewController(details, animated: true, completion: nil)
+        }
     }
 }
