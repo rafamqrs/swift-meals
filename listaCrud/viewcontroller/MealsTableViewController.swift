@@ -49,8 +49,18 @@ class MealsTableViewController: UITableViewController,
             }
             let row = indexPath!.row
             let meal = meals[row]
+            
+            var mensagem = "Happiness: \(meal.happiness)"
+            
+            for item in meal.items{
+                mensagem += "\n * \(item.name) - \(item.calories) calories"
+            }
             //Mostra os detalhes do objeto selecionado
-            let details = UIAlertController(title: meal.name, message: "Happiness: \(meal.happiness)", preferredStyle: UIAlertControllerStyle.Alert)
+            let details = UIAlertController(title: meal.name, message: mensagem, preferredStyle: UIAlertControllerStyle.Alert)
+            //botao para fechar o modal de alerta
+            let btnOk = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+            details.addAction(btnOk)
+            
             //Exibe na tela o modal com os details de forma animado
             presentViewController(details, animated: true, completion: nil)
         }
